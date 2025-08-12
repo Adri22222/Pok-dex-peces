@@ -1,0 +1,79 @@
+const firebaseConfig = { apiKey: "TU_API_KEY", authDomain: "TU_PROYECTO.firebaseapp.com", projectId: "TU_PROYECTO", storageBucket: "TU_PROYECTO.appspot.com", messagingSenderId: "TU_ID", appId: "TU_APP_ID" };
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+let fishData = []; // Cargar desde fish.json
+let userLists = { visto: [], noVisto: [], tenido: [], noTenido: [] };
+
+document.querySelector('.menu-icon').addEventListener('click', () => {
+    document.getElementById('menu').classList.toggle('hidden');
+});
+
+document.getElementById('search').addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    renderFish(fishData.filter(fish => fish.nombre.toLowerCase().includes(query) || fish.cientifico.toLowerCase().includes(query)));
+});
+
+function changeView() {
+    const mode = document.getElementById('viewMode').value;
+    const grid = document.querySelector('.fish-grid');
+    grid.style.gridTemplateColumns = mode === '1' ? '1fr' : `repeat(auto-fill, minmax(${mode === '10' ? 200 : 100}px, 1fr))`;
+}
+
+function filterList(type) {
+    renderFish(fishData.filter(fish => userLists[type].includes(fish.id)));
+}
+
+function renderFish(fishList) {
+    const grid = document.getElementById('fishList');
+    grid.innerHTML = '';
+    fishList.forEach(fish => {
+        const card = document.createElement('div');
+        card.className = 'fish-card';
+        card.innerHTML = `
+            <div class="seen ${userLists.visto.includes(fish.id) ? 'active' : ''}" onclick="toggleSeen(${fish.id})"></div>
+            <img src="${fish.imagen}" alt="${fish.nombre}" onclick="showDetails(${fish.id})">
+            <h3>${fish.nombre}</h3>
+            <button class="danger ${fish.tipo}" onclick="showDanger(${fish.id})">Peligrosidad</button>
+            <button onclick="addNote(${fish.id})">Notas</button>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function toggleSeen(id) {
+    const index = userLists.visto.indexOf(id);
+    if (index === -1) userLists.visto.push(id);
+    else userLists.visto.splice(index, 1);
+    renderFish(fishData);
+}
+
+function showDetails(id) {
+    const fish = fishData.find(f => f.id === id);
+    alert(`Nombre: ${fish.nombre}\nCientífico: ${fish.cientifico}\nPeso: ${fish.peso}g\nVida: ${fish.vida} años\nTipo: ${fish.tipo}`);
+}
+
+function showDanger(id) {
+    const fish = fishData.find(f => f.id === id);
+    alert(`Peligrosidad: ${fish.peligrosidad}\n${fish.peligro_desc}`);
+}
+
+function addNote(id) {
+    const note = prompt('Añade una nota:');
+    if (note) fishData.find(f => f.id === id).notas.push(note);
+}
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log('Usuario logueado:', user.email);
+        // Cargar listas del usuario desde Firebase
+    } else {
+        auth.signInAnonymously();
+    }
+});
+
+// Cargar datos
+fetch('fish.json').then(res => res.json()).then(data => {
+    fishData = data;
+    renderFish(fishData);
+});

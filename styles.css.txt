@@ -1,0 +1,21 @@
+body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f0f0f0; }
+header { display: flex; justify-content: space-between; align-items: center; background: #333; color: white; padding: 10px; }
+.menu-icon { cursor: pointer; font-size: 24px; }
+#menu { display: none; background: #444; color: white; padding: 10px; }
+#menu.hidden { display: none; }
+#menu ul { list-style: none; padding: 0; }
+#menu li { padding: 10px; cursor: pointer; }
+#menu li:hover { background: #555; }
+#search { padding: 5px; width: 200px; }
+.fish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.fish-card { background: #fff; border: 1px solid #ccc; padding: 10px; text-align: center; position: relative; }
+.fish-card img { max-width: 100%; cursor: pointer; }
+.fish-card .seen { position: absolute; top: 10px; left: 10px; width: 20px; height: 20px; border-radius: 50%; background: #ccc; }
+.fish-card .seen.active { background: #0f0; }
+.danger { padding: 5px; border: none; cursor: pointer; }
+.salada { background: blue; color: white; }
+.dulce { background: green; color: white; }
+.cuevas { background: purple; color: white; }
+.arrecife { background: orange; color: white; }
+.profundo { background: darkpurple; color: white; }
+.migratorios { background: lightgreen; color: white; }

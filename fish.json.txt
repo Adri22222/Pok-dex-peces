@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "nombre": "Pez payaso",
+        "cientifico": "Amphiprioninae",
+        "peso": 250,
+        "vida": 10,
+        "tipo": "arrecife",
+        "peligrosidad": "Baja",
+        "peligro_desc": "Inofensivo, vive en anémonas.",
+        "imagen": "https://example.com/clownfish.jpg",
+        "notas": []
+    },
+    {
+        "id": 2,
+        "nombre": "Trucha arcoíris",
+        "cientifico": "Oncorhynchus mykiss",
+        "peso": 4000,
+        "vida": 7,
+        "tipo": "dulce",
+        "peligrosidad": "Baja",
+        "peligro_desc": "No peligroso, comestible.",
+        "imagen": "https://example.com/trout.jpg",
+        "notas": []
+    },
+    {
+        "id": 3,
+        "nombre": "Pez linterna",
+        "cientifico": "Photoblepharon palpebratum",
+        "peso": 50,
+        "vida": 5,
+        "tipo": "cuevas",
+        "peligrosidad": "Media",
+        "peligro_desc": "Luz bioluminiscente, no ataca.",
+        "imagen": "https://example.com/lanternfish.jpg",
+        "notas": []
+    }
+]
